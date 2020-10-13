@@ -1,7 +1,51 @@
 #!/bin/bash
 export DISPLAY=:99
 
-LAT_V="$(wget -qO- https://github.com/ich777/versions/raw/master/Discord | grep LATEST | cut -d '=' -f2)"
+LAT_V="$(wget -qO- https://github.com/ich777/versions/raw/master/RamboxCE | grep LATEST | cut -d '=' -f2)"
+CUR_V="$(find ${DATA_DIR} -name "ramboxce-*" | cut -d '-' -f2)"
+
+if [ -z $LAT_V ]; then
+    if [ -z $CUR_V ]; then
+        echo "---Can't get latest version of Rambox CE, putting container into sleep mode!---"
+        sleep infinity
+    else
+        echo "---Can't get latest version of Rambox CE, falling back to v$CUR_V---"
+    fi
+fi
+
+if [ -f ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz ]; then
+	rm -rf ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
+fi
+
+echo "---Version Check---"
+if [ -z "$CUR_V" ]; then
+    echo "---Rambox CE not found, downloading and installing v$LAT_V...---"
+    cd ${DATA_DIR}
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz "https://github.com/ramboxapp/community-edition/releases/download/${LAT_V}/Rambox-${LAT_V}-linux-x64.tar.gz" ; then
+        echo "---Successfully downloaded Rambox CE v$LAT_V---"
+    else
+        echo "---Something went wrong, can't download Rambox CE v$LAT_V, putting container into sleep mode!---"
+        sleep infinity
+    fi
+    tar -C ${DATA_DIR} --strip-components=1 -xf ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
+	touch ramboxce-$LAT_V
+    rm ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
+elif [ "$CUR_V" != "$LAT_V" ]; then
+    echo "---Version missmatch, installed v$CUR_V, downloading and installing v$LAT_V...---"
+    cd ${DATA_DIR}
+	rm -rf ${DATA_DIR}/*
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz "https://github.com/ramboxapp/community-edition/releases/download/${LAT_V}/Rambox-${LAT_V}-linux-x64.tar.gz" ; then
+        echo "---Successfully downloaded Rambox CE v$LAT_V---"
+    else
+        echo "---Something went wrong, can't download Rambox CE v$LAT_V, putting container into sleep mode!---"
+        sleep infinity
+    fi
+    tar -C ${DATA_DIR} --strip-components=1 -xf ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
+	touch ramboxce-$LAT_V
+    rm ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
+elif [ "$CUR_V" == "$LAT_V" ]; then
+    echo "---nzbget v$CUR_V up-to-date---"
+fi
 
 echo "---Preparing Server---"
 echo "---Resolution check---"
@@ -42,8 +86,6 @@ echo "---Starting noVNC server---"
 websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
 sleep 2
 
-sleep infinity
-
-echo "---Starting Discord---"
+echo "---Starting Rambox CE---"
 cd ${DATA_DIR}
-${DATA_DIR}/bin/Discord --no-sandbox
+${DATA_DIR}/rambox --no-sandbox 2>/dev/null
