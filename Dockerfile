@@ -4,21 +4,21 @@ LABEL maintainer="admin@minenet.at"
 
 RUN export TZ=Europe/Rome && \
 	apt-get update && \
-	apt-get -y install --no-install-recommends htop && \
+	apt-get -y install --no-install-recommends curl && \
 	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 	echo $TZ > /etc/timezone && \
 	rm -rf /var/lib/apt/lists/* && \
-	sed -i '/    document.title =/c\    document.title = "Discord - noVNC";' /usr/share/novnc/app/ui.js && \
+	sed -i '/    document.title =/c\    document.title = "RamboxCE - noVNC";' /usr/share/novnc/app/ui.js && \
 	rm /usr/share/novnc/app/images/icons/*
 
-ENV DATA_DIR=/discord
+ENV DATA_DIR=/ramboxce
 ENV CUSTOM_RES_W=1024
 ENV CUSTOM_RES_H=768
 ENV UMASK=000
 ENV UID=99
 ENV GID=100
 ENV DATA_PERM=770
-ENV USER="discord"
+ENV USER="ramboxce"
 
 RUN mkdir $DATA_DIR && \
 	useradd -d $DATA_DIR -s /bin/bash $USER && \
