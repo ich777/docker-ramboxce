@@ -1,5 +1,5 @@
 # Rambox Community Edition  in Docker optimized for Unraid
-Rambox Community Edition is a Free, Open Source and Cross Platform messaging and emailing app that combines common web applications into one. A few of the supported platforms are Airdroid, Discord, Duo, Gmail, Hangouts, ICQ, Steam and many many more.
+Rambox Community Edition is a Free, Open Source messaging and emailing app that combines common web applications into one. A few of the supported platforms are Airdroid, Discord, Duo, Gmail, Hangouts, ICQ, Steam and many many more.
 
 **UPDATE:** The container will check on every start/restart if there is a newer version available.
 
