@@ -88,4 +88,4 @@ sleep 2
 
 echo "---Starting Rambox CE---"
 cd ${DATA_DIR}
-${DATA_DIR}/rambox --no-sandbox 2>/dev/null
+${DATA_DIR}/rambox --no-sandbox
