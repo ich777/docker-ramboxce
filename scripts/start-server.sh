@@ -44,7 +44,7 @@ elif [ "$CUR_V" != "$LAT_V" ]; then
 	touch ramboxce-$LAT_V
     rm ${DATA_DIR}/RamboxCE-v$LAT_V.tar.gz
 elif [ "$CUR_V" == "$LAT_V" ]; then
-    echo "---nzbget v$CUR_V up-to-date---"
+    echo "---Rambox CE v$CUR_V up-to-date---"
 fi
 
 echo "---Preparing Server---"
@@ -83,7 +83,7 @@ echo "---Starting Fluxbox---"
 screen -d -m env HOME=/etc /usr/bin/fluxbox
 sleep 2
 echo "---Starting noVNC server---"
-websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:5900
+websockify -D --web=/usr/share/novnc/ --cert=/etc/ssl/novnc.pem 8080 localhost:${X11_PORT}
 sleep 2
 
 echo "---Starting Rambox CE---"
