@@ -23,6 +23,7 @@ docker run --name Rambox-CE -d \
 	--volume /mnt/cache/appdata/ramboxce:/ramboxce \
 	ich777/ramboxce
 ```
+### Webgui address: http://[SERVERIP]:[PORT]/vnc.html?autoconnect=true
 
 This Docker was mainly edited for better use with Unraid, if you don't use Unraid you should definitely try it!
  
