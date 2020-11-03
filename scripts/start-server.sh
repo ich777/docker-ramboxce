@@ -48,6 +48,24 @@ elif [ "$CUR_V" == "$LAT_V" ]; then
 fi
 
 echo "---Preparing Server---"
+if [ ! -f ${DATA_DIR}/.config/Rambox/config.json ]; then
+    mkdir -p ${DATA_DIR}/.config/Rambox
+    echo '{
+	"always_on_top": false,
+	"hide_menu_bar": false,
+	"tabbar_location": "top",
+	"hide_tabbar_labels": false,
+	"window_display_behavior": "taskbar_tray",
+	"auto_launch": true,
+	"flash_frame": true,
+	"window_close_behavior": "keep_in_tray",
+	"start_minimized": false,
+	"systemtray_indicator": false
+}' > ${DATA_DIR}/.config/Rambox/config.json
+else
+    sed -i "/	\"systemtray_indicator\":/c\	\"systemtray_indicator\": false," ${DATA_DIR}/.config/Rambox/config.json
+fi
+
 echo "---Resolution check---"
 if [ -z "${CUSTOM_RES_W} ]; then
 	CUSTOM_RES_W=1024
