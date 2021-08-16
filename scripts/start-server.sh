@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "---DEPRECATED DOESN'T RUN IN DOCKER ANYMORE---"
+sleep infinity
 export DISPLAY=:99
 
 LAT_V="$(wget -qO- https://github.com/ich777/versions/raw/master/RamboxCE | grep LATEST | cut -d '=' -f2)"
