@@ -3,11 +3,11 @@ FROM ich777/novnc-baseimage
 LABEL maintainer="admin@minenet.at"
 
 RUN export TZ=Europe/Rome && \
-	apt-get update && \
-	apt-get -y install --no-install-recommends libxcursor-dev libnss3 libgdk-pixbuf2.0-0 libgtk-3-0 libasound2 && \
-	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
-	echo $TZ > /etc/timezone && \
-	rm -rf /var/lib/apt/lists/* && \
+#	apt-get update && \
+#	apt-get -y install --no-install-recommends libxcursor-dev libnss3 libgdk-pixbuf2.0-0 libgtk-3-0 libasound2 && \
+#	ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+#	echo $TZ > /etc/timezone && \
+#	rm -rf /var/lib/apt/lists/* && \
 	sed -i '/    document.title =/c\    document.title = "Rambox CE - noVNC";' /usr/share/novnc/app/ui.js && \
 	rm /usr/share/novnc/app/images/icons/*
 
